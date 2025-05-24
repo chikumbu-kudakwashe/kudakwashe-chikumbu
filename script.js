@@ -103,6 +103,7 @@ if (contactForm) {
         }
         else{
             success.innerHTML = `Thank you for contacting us, ${name}. We will get back to you soon!`
+            sendMail()
             contactForm.reset();
         }
 
@@ -145,6 +146,17 @@ if (hireForm) {
         document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
             services.push(checkbox.value);
         });
+
+        let params = {
+            name: name,
+            email: email,
+            phone: phone,
+            details: details,
+            budget: budget,
+            services: services
+    }
+
+    emailjs.send('service_r8bawmc', 'template_l3fehqi', params)
         
         
         alert('Thank you for your request! I will review it and get back to you soon.');
@@ -155,3 +167,21 @@ if (hireForm) {
 
 // Update copyright year automatically
 document.getElementById('year').textContent = new Date().getFullYear();
+
+function sendMail(){
+           
+        const name = document.getElementById('contact-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const subject = document.getElementById('contact-subject').value.trim();
+        const message = document.getElementById('contact-message').value.trim();
+        
+    let params = {
+        name,
+        email,
+        subject,
+        message
+    }
+
+    emailjs.send('service_r8bawmc', 'template_l3fehqi', params)
+}
+
